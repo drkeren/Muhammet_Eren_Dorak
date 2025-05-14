@@ -1,118 +1,115 @@
 # Karatsuba Algoritması
 
-Karatsuba algoritması, büyük sayıların çarpılmasında kullanılan hızlı bir algoritmadır. Klasik çarpma algoritmasından daha verimli bir çözüm sunarak, çok büyük sayıların çarpılmasını hızlandırır. Bu algoritma, **böl ve fethet (divide and conquer)** stratejisini kullanır.
-
-## İçerik
-
-- [Algoritmanın Ne Yaptığı](#algoritmanın-ne-yaptığı)
-- [Kategori ve Çözüm Yolu](#kategori-ve-çözüm-yolu)
-- [Ne Zaman ve Neden Kullanılır?](#ne-zaman-ve-neden-kullanılır)
-- [Zaman ve Uzay Karmaşıklığı](#zaman-ve-uzay-karmaşıklığı)
-- [Algoritmanın Adımları](#algoritmanın-adımları)
-- [Kullanım Yerlerine Ait Örnekler](#kullanım-yerlerine-ait-örnekler)
-- [Avantajlar ve Dezavantajlar](#avantajlar-ve-dezavantajlar)
-- [Kaynakça](#kaynakça)
+Algoritma, klasik çarpma yöntemlerine kıyasla daha hızlı çalışır ve "böl ve fethet" (divide and conquer) stratejisiyle daha az çarpma işlemi yaparak verimliliği artırır.
 
 ---
 
-## Algoritmanın Ne Yaptığı
+## 🔍 İçindekiler
 
-Karatsuba algoritması, **büyük sayıların çarpımını daha hızlı yapabilmek** amacıyla geliştirilmiş bir algoritmadır. Klasik çarpma yönteminde, iki sayının çarpımı için $O(n^2)$ karmaşıklığında işlem yapılırken, Karatsuba algoritması bunu daha düşük bir karmaşıklığa indirir. Bu algoritma, sayıları daha küçük parçalara bölerek sadece 3 çarpma işlemi yapar ve sonrasında bu çarpımlarla sonucu birleştirir.
-
----
-
-## Kategori ve Çözüm Yolu
-
-- **Kategori**: Karatsuba algoritması, **böl ve fethet** (divide and conquer) yaklaşımını kullanır. Bu yaklaşımda, problemi daha küçük alt problemlere böleriz ve her birini ayrı ayrı çözerek sonuca ulaşırız.
-
-- **Çözüm Yolu**:
-  - Sayılar ikiye bölünür.
-  - 3 temel çarpma işlemi yapılır.
-  - Ara işlemlerle çözüm bulunur.
-  - Sonuçlar uygun basamağa yerleştirilerek toplanır.
+- [1. Karatsuba Algoritması Nedir?](#1-karatsuba-algoritması-nedir)
+- [2. Neden Kullanılır?](#2-neden-kullanılır)
+- [3. Algoritmanın Adımları](#3-algoritmanın-adımları)
+- [4. Uygulama Açıklaması](#4-uygulama-açıklaması)
+- [5. Kullanım Alanları](#5-kullanım-alanları)
+- [6. Zaman ve Uzay Karmaşıklığı](#6-zaman-ve-uzay-karmaşıklığı)
+- [7. Avantajlar ve Dezavantajlar](#7-avantajlar-ve-dezavantajlar)
+- [8. Derleme ve Çalıştırma](#8-derleme-ve-çalıştırma)
+- [9. Kaynakça](#9-kaynakça)
 
 ---
 
-## Ne Zaman ve Neden Kullanılır?
+## 1. Karatsuba Algoritması Nedir?
 
-### **Ne Zaman Kullanılır?**
-- **Büyük sayıların çarpılması gerektiğinde** kullanılır. Örneğin, 512 basamaktan uzun sayılarla çalışıyorsanız, Karatsuba algoritması klasik çarpma yöntemine göre çok daha hızlı sonuç verir.
-- Genellikle **kriptografi**, **bilimsel hesaplamalar** ve **büyük sayı aritmetiği** gibi alanlarda kullanılır.
+Karatsuba algoritması, 1960'larda Anatolii Karatsuba tarafından geliştirilmiş bir çarpma algoritmasıdır. Klasik çarpma yönteminde iki `n` basamaklı sayı çarpmak için `n²` işlem gerekirken, Karatsuba algoritması bu işlemi `O(n^1.585)` karmaşıklıkla yapar.
 
-### **Neden Kullanılır?**
-- Klasik çarpma algoritması $O(n^2)$ karmaşıklığa sahipken, Karatsuba algoritması sadece $O(n^{1.585})$ karmaşıklığına sahiptir. Bu sayede, çok büyük sayılarla yapılan işlemlerde önemli bir hız avantajı sağlar.
-- Karatsuba, sayı büyüklüğü arttıkça verimliliği daha belirgin hale gelir.
+Bu verimlilik, algoritmanın sayıları parçalara ayırması ve **sadece 3 çarpma işlemi** ile sonucu oluşturmasından kaynaklanır.
 
 ---
 
-## Zaman ve Uzay Karmaşıklığı
+## 2. Neden Kullanılır?
 
-### **Zaman Karmaşıklığı**
-- Karatsuba algoritması, klasik çarpma yöntemine göre daha hızlıdır.
-- **Zaman Karmaşıklığı**: $O(n^{1.585})$ (n, sayı basamağı sayısıdır).
-
-### **Uzay Karmaşıklığı**
-- **Uzay Karmaşıklığı**: $O(n)$'dir. Rekürsif yapısı ve ara verilerin saklanması nedeniyle biraz daha fazla bellek kullanır.
+- Klasik algoritmalar, büyük sayılar için yavaş çalışır.
+- Karatsuba algoritması, büyük sayılarla yapılan işlemlerde çok daha hızlıdır.
+- Özellikle **kriptografi**, **bilimsel hesaplamalar** ve **yüksek hassasiyetli aritmetik** gerektiren durumlarda tercih edilir.
 
 ---
 
-## Algoritmanın Adımları
+## 3. Algoritmanın Adımları
 
-1. **Sayının ikiye bölünmesi**:
-   - Verilen sayılar $x$ ve $y$ ikiye ayrılır:
-     - $x = a \cdot 10^m + b$
-     - $y = c \cdot 10^m + d$
-
-2. **3 küçük çarpma yapılır**:
-   - $ac$, $bd$ ve $(a + b)(c + d)$ hesaplanır.
-
-3. **Ara çarpım**:
-   - $ad + bc$, $(a + b)(c + d) - ac - bd$ işlemi ile bulunur.
-
-4. **Sonuç birleştirilir**:
-   - $x \cdot y = ac \cdot 10^{2m} + (ad + bc) \cdot 10^m + bd$
-
-5. **Rekürsif olarak daha küçük sayı çarpımları yapılır**.
+1. Verilen iki sayı `x` ve `y`, ortadan ikiye bölünür.
+2. 3 çarpma işlemi yapılır: `ac`, `bd` ve `(a + b)(c + d)`
+3. Ortak terim çıkarılarak `ad + bc` hesaplanır.
+4. Sonuç şu şekilde birleştirilir:
+   - `x * y = ac * 10^(2m) + (ad + bc) * 10^m + bd`
+5. Bu işlem sayı küçük olana kadar rekürsif olarak tekrarlanır.
 
 ---
 
-## Kullanım Yerlerine Ait Örnekler
+## 4. Uygulama Açıklaması
 
-Karatsuba algoritması genellikle şu alanlarda kullanılır:
+Bu projede iki dosya yer alır:
 
-1.  **Kriptografi**:
-    -   **RSA ve Diffie-Hellman** gibi şifreleme algoritmalarında çok büyük asal sayıların çarpılması gerekir.
-    -   Örneğin, RSA anahtar üretiminde kullanılan büyük asal sayıların çarpımı Karatsuba ile hızlandırılabilir.
+- `karatsuba.cpp`: Karatsuba algoritmasının tanımı yer alır.
+- `karatsuba-test.cpp`: Kullanıcıdan iki sayı alır ve algoritmayı kullanarak sonucu gösterir.
 
-2.  **Büyük Sayı Aritmetiği**:
-    -   **BigInteger** kütüphanelerinde (Java, Python vb.) büyük sayılarla yapılan işlemler Karatsuba algoritmasıyla optimize edilir.
-    -   Örneğin, Python'da 1000 basamaklı sayılarla yapılan işlemler Karatsuba ile daha hızlı gerçekleşir.
-
-3.  **Bilimsel Hesaplamalar**:
-    -   Büyük sayılarla yapılan hesaplamalarda, örneğin **astrofizik** veya **genetik hesaplamalar** gibi alanlarda kullanılır.
-
-4.  **Matematiksel Yazılımlar**:
-    -   **Mathematica**, **MATLAB** gibi yazılımlar, büyük sayıların çarpılması gereken işlemlerde Karatsuba algoritmasını kullanarak performansı artırabilir.
+Test kodunda kullanıcıdan klavye ile iki sayı girmesi istenir. Bu sayılar Karatsuba algoritmasıyla çarpılır ve ekrana yazdırılır.
 
 ---
 
-## Avantajlar ve Dezavantajlar
+## 5. Kullanım Alanları
 
-### **Avantajlar**:
-- **Daha Hızlı Çarpma**: Karatsuba algoritması, klasik çarpma yönteminden çok daha hızlıdır (zaman karmaşıklığı $O(n^{1.585})$).
-- **Daha Az Çarpma**: 4 çarpma yerine sadece 3 çarpma yapılır.
-- **Paralel İşleme Uygunluğu**: Rekürsif yapısı, paralel işleme teknikleriyle daha da hızlandırılabilir.
-- **Eğitimsel Katkı**: Algoritma, **böl ve fethet** stratejisinin anlaşılmasında çok iyi bir örnek oluşturur.
-
-### **Dezavantajlar**:
-- **Küçük Sayılar İçin Verimsiz**: Eğer sayılar küçükse (örneğin 3-4 basamaktan oluşuyorsa), klasik yöntem daha hızlı olabilir.
-- **Daha Fazla Toplama ve Çıkarma**: Çarpma işlemleri azalır, ancak toplamalar ve çıkarma işlemleri artar, bu da bazı durumlarda dezavantaj olabilir.
-- **Karmaşıklık**: Uygulaması daha karmaşıktır. Özellikle rekürsif yapılar, başlangıç seviyesindeki kullanıcılar için kafa karıştırıcı olabilir.
-- **Bellek Kullanımı**: Rekürsif çağrılar nedeniyle daha fazla bellek kullanımı gerekebilir.
+- **Kriptografi**: RSA gibi algoritmalarda büyük sayı çarpımı gerekir.
+- **Bilimsel Hesaplamalar**: Astrofizik, genetik gibi alanlarda kullanılır.
+- **Büyük Sayı Aritmetiği**: BigInteger veri yapılarında verim sağlar.
+- **Yazılım Kütüphaneleri**: Java, Python gibi dillerin bazı kütüphanelerinde Karatsuba temel alınır.
 
 ---
 
-## Kaynakça 
-- Wikipedia - Karatsuba algorithm: [https://en.wikipedia.org/wiki/Karatsuba_algorithm](https://en.wikipedia.org/wiki/Karatsuba_algorithm)
-- Introduction to Algorithms (MIT Press)
+## 6. Zaman ve Uzay Karmaşıklığı
 
+- **Zaman Karmaşıklığı**: `O(n^1.585)`
+- **Uzay Karmaşıklığı**: `O(n)` — Rekürsif yapı nedeniyle bellek kullanımı artabilir.
+
+---
+
+## 7. Avantajlar ve Dezavantajlar
+
+### ✅ Avantajlar
+
+- Daha az çarpma işlemiyle hızlı sonuç
+- Büyük sayılarla daha verimli
+- Matematiksel olarak şık ve paralel işleme uygun
+
+### ❌ Dezavantajlar
+
+- Küçük sayılar için klasik yöntem daha basittir
+- Uygulaması biraz daha karmaşıktır
+- Fazladan toplama ve çıkarma yapılır
+
+---
+
+## 8. Derleme ve Çalıştırma
+
+### Linux/macOS:
+```bash
+g++ karatsuba.cpp karatsuba-test.cpp -o test
+./test
+```
+
+### Windows (CMD):
+```bash
+g++ karatsuba.cpp karatsuba-test.cpp -o test.exe
+test.exe
+```
+
+---
+
+## 9. Kaynakça
+
+[1] Karatsuba, A. A. & Ofman, Y. (1962). *Multiplication of Multidigit Numbers on Automata*. Soviet Physics Doklady, 7(7), 595–596.
+
+[2] Cormen, T. H., Leiserson, C. E., Rivest, R. L., & Stein, C. (2009). *Introduction to Algorithms* (3rd ed.). MIT Press.
+
+[3] GeeksforGeeks. (n.d.). *Karatsuba Algorithm for Fast Multiplication using Divide and Conquer*. Erişim adresi: https://www.geeksforgeeks.org/kartsuba-algorithm-for-fast-multiplication-using-divide-and-conquer-algorithm/
+
+[4] Wikipedia. (n.d.). *Karatsuba algorithm*. Erişim adresi: https://en.wikipedia.org/wiki/Karatsuba_algorithm
