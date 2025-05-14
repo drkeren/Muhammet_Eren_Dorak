@@ -1,115 +1,124 @@
 # Karatsuba Algoritması
 
-Karatsuba algoritması, büyük sayıların çarpılmasında kullanılan hızlı bir algoritmadır. Klasik çarpma algoritmasından daha verimli bir çözüm sunarak, çok büyük sayıların çarpılmasını hızlandırır. Bu algoritma, **böl ve fethet (divide and conquer)** stratejisini kullanır.
+Karatsuba algoritması, büyük sayıların çarpılmasında kullanılan hızlı ve etkili bir algoritmadır. Klasik çarpma algoritmasına kıyasla daha düşük bir zaman karmaşıklığı sunarak, özellikle çok büyük sayıların çarpımını önemli ölçüde hızlandırır. Temelinde **böl ve fethet (divide and conquer)** prensibi yatar.
 
-## İçerik
+## İçindekiler
 
-- [Algoritmanın Ne Yaptığı](#algoritmanın-ne-yaptığı)
-- [Kategori ve Çözüm Yolu](#kategori-ve-çözüm-yolu)
+- [Algoritmanın Özeti](#algoritmanın-özeti)
+- [Kategori ve Çözüm Yaklaşımı](#kategori-ve-çözüm-yaklaşımı)
 - [Ne Zaman ve Neden Kullanılır?](#ne-zaman-ve-neden-kullanılır)
-- [Zaman ve Uzay Karmaşıklığı](#zaman-ve-uzay-karmaşıklığı)
+- [Karmaşıklık Analizi](#karmaşıklık-analizi)
 - [Algoritmanın Adımları](#algoritmanın-adımları)
-- [Kullanım Yerlerine Ait Örnekler](#kullanım-yerlerine-ait-örnekler)
-- [Avantajlar ve Dezavantajlar](#avantajlar-ve-dezavantajlar)
+- [Örnek Uygulama Alanları](#örnek-uygulama-alanları)
+- [Avantajları ve Dezavantajları](#avantajları-ve-dezavantajları)
+- [Ek Kaynaklar](#ek-kaynaklar)
+- [Katkıda Bulunma](#katkıda-bulunma)
+- [Lisans](#lisans)
 
 ---
 
-##  Algoritmanın Ne Yaptığı
+## Algoritmanın Özeti
 
-Karatsuba algoritması, **büyük sayıların çarpımını daha hızlı yapabilmek** amacıyla geliştirilmiş bir algoritmadır. Klasik çarpma yönteminde, iki sayının çarpımı için `O(n^2)` karmaşıklığında işlem yapılırken, Karatsuba algoritması bunu daha düşük bir karmaşıklığa indirir. Bu algoritma, sayıları daha küçük parçalara bölerek sadece 3 çarpma işlemi yapar ve sonrasında bu çarpımlarla sonucu birleştirir.
+Karatsuba algoritması, **büyük sayıların çarpımını daha verimli bir şekilde gerçekleştirmek** için tasarlanmıştır. Klasik çarpma yönteminin $O(n^2)$ olan zaman karmaşıklığını, $O(n^{\log_2 3} \approx n^{1.585})$ seviyesine düşürür. Bu iyileştirme, sayıların daha küçük parçalara ayrılması ve sadece üç çarpma işlemi kullanılarak sonucun elde edilmesiyle sağlanır.
 
 ---
 
-## Kategori ve Çözüm Yolu
+## Kategori ve Çözüm Yaklaşımı
 
-- **Kategori**: Karatsuba algoritması, **böl ve fethet** (divide and conquer) yaklaşımını kullanır. Bu yaklaşımda, problemi daha küçük alt problemlere böleriz ve her birini ayrı ayrı çözerek sonuca ulaşırız.
-  
-- **Çözüm Yolu**: 
-  - Sayılar ikiye bölünür.
-  - 3 temel çarpma işlemi yapılır.
-  - Ara işlemlerle çözüm bulunur.
-  - Sonuçlar uygun basamağa yerleştirilerek toplanır.
+-   **Kategori**: $\textbf{Böl}$ $\textbf{ve}$ $\textbf{Fethet}$ (Divide and Conquer)
+-   **Çözüm Yolu**:
+    1.  Çarpılacak sayılar eşit büyüklükte (veya yaklaşık olarak eşit) iki parçaya ayrılır.
+    2.  Üç adet daha küçük çarpma işlemi gerçekleştirilir.
+    3.  Elde edilen sonuçlar, uygun kaydırmalar ve toplamalarla birleştirilerek nihai çarpım bulunur.
 
 ---
 
 ## Ne Zaman ve Neden Kullanılır?
 
-### **Ne Zaman Kullanılır?**
-- **Büyük sayıların çarpılması gerektiğinde** kullanılır. Örneğin, 512 basamaktan uzun sayılarla çalışıyorsanız, Karatsuba algoritması klasik çarpma yöntemine göre çok daha hızlı sonuç verir.
-- Genellikle **kriptografi**, **bilimsel hesaplamalar** ve **büyük sayı aritmetiği** gibi alanlarda kullanılır.
+### $\textbf{Ne Zaman Kullanılır?}$
 
-### **Neden Kullanılır?**
-- Klasik çarpma algoritması `O(n^2)` karmaşıklığa sahipken, Karatsuba algoritması sadece `O(n^1.585)` karmaşıklığına sahiptir. Bu sayede, çok büyük sayılarla yapılan işlemlerde önemli bir hız avantajı sağlar.
-- Karatsuba, sayı büyüklüğü arttıkça verimliliği daha belirgin hale gelir.
+-   **Çok büyük sayılar çarpılırken**: Özellikle yüzlerce veya binlerce basamaklı sayılarla işlem yapıldığında klasik yönteme göre belirgin bir performans avantajı sunar.
+-   **Kriptografi uygulamalarında**: RSA, Diffie-Hellman gibi algoritmaların temelini oluşturan büyük sayı aritmetiğinde.
+-   **Bilimsel ve mühendislik hesaplamalarında**: Yüksek hassasiyet gerektiren ve büyük sayılarla çalışılan simülasyonlarda.
+
+### $\textbf{Neden Kullanılır?}$
+
+-   **Performans artışı**: $O(n^{1.585})$ zaman karmaşıklığı sayesinde, büyük $n$ değerleri için klasik $O(n^2)$ yönteminden daha hızlıdır.
+-   Büyük veri setleriyle çalışırken işlem süresini kısaltır.
 
 ---
 
-## Zaman ve Uzay Karmaşıklığı
+## Karmaşıklık Analizi
 
-### **Zaman Karmaşıklığı**
-- Karatsuba algoritması, klasik çarpma yöntemine göre daha hızlıdır.
-- **Zaman Karmaşıklığı**: `O(n^1.585)` (n, sayı basamağı sayısıdır).
+### $\textbf{Zaman Karmaşıklığı}$:
+-   $O(n^{\log_2 3}) \approx O(n^{1.585})$
 
-### **Uzay Karmaşıklığı**
-- **Uzay Karmaşıklığı**: `O(n)`'dir. Rekürsif yapısı ve ara verilerin saklanması nedeniyle biraz daha fazla bellek kullanır.
+### $\textbf{Uzay Karmaşıklığı}$:
+-   $O(n)$ (rekürsif çağrılar ve ara sonuçların saklanması nedeniyle)
 
 ---
 
 ## Algoritmanın Adımları
 
-1. **Sayının ikiye bölünmesi**:
-   - Verilen sayılar `x` ve `y` ikiye ayrılır: 
-     - `x = a * 10^m + b`
-     - `y = c * 10^m + d`
-   
-2. **3 küçük çarpma yapılır**:
-   - `ac`, `bd` ve `(a + b)(c + d)` hesaplanır.
+İki $n$ basamaklı sayıyı ($x$ ve $y$) çarpmak için (basamak sayısı $n = 2m$ olduğu varsayılır):
 
-3. **Ara çarpım**:
-   - `ad + bc`, `(a + b)(c + d) - ac - bd` işlemi ile bulunur.
+1.  **Bölme**: Sayıları $m$ basamaklı iki parçaya ayırın:
+    $$x = a \cdot 10^m + b$$
+    $$y = c \cdot 10^m + d$$
+    Burada $a, b, c, d$ yaklaşık olarak $n/2$ basamaklı sayılardır.
 
-4. **Sonuç birleştirilir**:
-   - `x * y = ac * 10^(2m) + (ad + bc) * 10^m + bd`
+2.  **Üç Çarpma İşlemi**:
+    -   $p_1 = a \cdot c$
+    -   $p_2 = b \cdot d$
+    -   $p_3 = (a + b) \cdot (c + d)$
 
-5. **Rekürsif olarak daha küçük sayı çarpımları yapılır**.
+3.  **Ara Değerin Hesaplanması**:
+    -   $p_4 = p_3 - p_1 - p_2 = (a + b)(c + d) - ac - bd = ad + bc$
 
----
+4.  **Sonucun Birleştirilmesi**:
+    -   $x \cdot y = p_1 \cdot 10^{2m} + p_4 \cdot 10^m + p_2$
 
-## Kullanım Yerlerine Ait Örnekler
-
-Karatsuba algoritması genellikle şu alanlarda kullanılır:
-
-1. **Kriptografi**:
-   - **RSA ve Diffie-Hellman** gibi şifreleme algoritmalarında çok büyük asal sayıların çarpılması gerekir.
-   - Örneğin, RSA anahtar üretiminde kullanılan büyük asal sayıların çarpımı Karatsuba ile hızlandırılabilir.
-
-2. **Büyük Sayı Aritmetiği**:
-   - **BigInteger** kütüphanelerinde (Java, Python vb.) büyük sayılarla yapılan işlemler Karatsuba algoritmasıyla optimize edilir.
-   - Örneğin, Python'da 1000 basamaklı sayılarla yapılan işlemler Karatsuba ile daha hızlı gerçekleşir.
-
-3. **Bilimsel Hesaplamalar**:
-   - Büyük sayılarla yapılan hesaplamalarda, örneğin **astrofizik** veya **genetik hesaplamalar** gibi alanlarda kullanılır.
-
-4. **Matematiksel Yazılımlar**:
-   - **Mathematica**, **MATLAB** gibi yazılımlar, büyük sayıların çarpılması gereken işlemlerde Karatsuba algoritmasını kullanarak performansı artırabilir.
+Bu adımlar, sayılar yeterince küçülene kadar rekürsif olarak uygulanır.
 
 ---
 
-## Avantajlar ve Dezavantajlar
+## Örnek Uygulama Alanları
 
-### **Avantajlar**:
-- **Daha Hızlı Çarpma**: Karatsuba algoritması, klasik çarpma yönteminden çok daha hızlıdır (zaman karmaşıklığı `O(n^1.585)`).
-- **Daha Az Çarpma**: 4 çarpma yerine sadece 3 çarpma yapılır.
-- **Paralel İşleme Uygunluğu**: Rekürsif yapısı, paralel işleme teknikleriyle daha da hızlandırılabilir.
-- **Eğitimsel Katkı**: Algoritma, **böl ve fethet** stratejisinin anlaşılmasında çok iyi bir örnek oluşturur.
+1.  **Kriptografi**:
+    -   Büyük asal sayıların çarpımında (örneğin RSA algoritmasında anahtar üretimi).
 
-### **Dezavantajlar**:
-- **Küçük Sayılar İçin Verimsiz**: Eğer sayılar küçükse (örneğin 3-4 basamaktan oluşuyorsa), klasik yöntem daha hızlı olabilir.
-- **Daha Fazla Toplama ve Çıkarma**: Çarpma işlemleri azalır, ancak toplamalar ve çıkarma işlemleri artar, bu da bazı durumlarda dezavantaj olabilir.
-- **Karmaşıklık**: Uygulaması daha karmaşıktır. Özellikle rekürsif yapılar, başlangıç seviyesindeki kullanıcılar için kafa karıştırıcı olabilir.
-- **Bellek Kullanımı**: Rekürsif çağrılar nedeniyle daha fazla bellek kullanımı gerekebilir.
+2.  **Büyük Sayı Kütüphaneleri**:
+    -   `BigInteger` gibi sınıfların implementasyonunda, yüksek performanslı çarpma işlemleri için.
+
+3.  **Bilimsel Hesaplamalar**:
+    -   Yüksek hassasiyetli matematiksel işlemlerde.
+
+4.  **Matematiksel Yazılımlar**:
+    -   Sembolik ve sayısal hesaplama araçlarında.
 
 ---
 
-Bu dosya, **Karatsuba algoritmasının** temel özelliklerini ve kullanımını açıklamak amacıyla hazırlanmıştır. Bu algoritma, büyük sayıların çarpım işlemlerinde verimliliği artırarak daha hızlı sonuçlar elde edilmesini sağlar.
+## Avantajları ve Dezavantajları
+
+### $\textbf{Avantajlar}$:
+
+-   Klasik $O(n^2)$ yöntemine göre **daha düşük zaman karmaşıklığı**.
+-   Büyük sayılarla yapılan çarpma işlemlerinde **önemli hızlanma**.
+-   Sadece **üç çarpma işlemi** gerektirir (klasik yöntemde dört).
+-   **Böl ve fethet** prensibini gösteren iyi bir örnektir.
+
+### $\textbf{Dezavantajlar}$:
+
+-   Küçük sayılar için (genellikle birkaç basamaklı) **klasik yöntem daha hızlı** olabilir.
+-   Daha fazla **toplama ve çıkarma işlemi** gerektirir.
+-   **Uygulaması klasik yönteme göre daha karmaşıktır**.
+-   Rekürsif yapısı nedeniyle **biraz daha fazla bellek** kullanabilir.
+
+---
+
+## Ek Kaynaklar
+
+-   [Wikipedia - Karatsuba algorithm](https://en.wikipedia.org/wiki/Karatsuba_algorithm)
+-   İlgili akademik makaleler ve ders notları (buraya linkler eklenebilir).
+
 
