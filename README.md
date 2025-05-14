@@ -14,7 +14,7 @@ Karatsuba algoritması, büyük sayıların çarpılmasında kullanılan hızlı
 
 ---
 
-## 🧠 Algoritmanın Ne Yaptığı
+##  Algoritmanın Ne Yaptığı
 
 Karatsuba algoritması, **büyük sayıların çarpımını daha hızlı yapabilmek** amacıyla geliştirilmiş bir algoritmadır. Klasik çarpma yönteminde, iki sayının çarpımı için `O(n^2)` karmaşıklığında işlem yapılırken, Karatsuba algoritması bunu daha düşük bir karmaşıklığa indirir. Bu algoritma, sayıları daha küçük parçalara bölerek sadece 3 çarpma işlemi yapar ve sonrasında bu çarpımlarla sonucu birleştirir.
 
