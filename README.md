@@ -96,7 +96,7 @@ g++ karatsuba.cpp karatsuba-test.cpp -o test
 ./test
 ```
 
-### Windows (CMD):
+### Windows:
 ```bash
 g++ karatsuba.cpp karatsuba-test.cpp -o test.exe
 test.exe
